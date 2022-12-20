@@ -29,15 +29,15 @@ const routes = [
                 name: "tiket.index",
                 component: () => import('@/view/Tiket/indexPage.vue'),
             },
+            {
+                path: "/profile",
+                name: "profile.index",
+                component: () => import('@/view/Profile/indexPage.vue'),
+            },
             // {
-            //     path: "/biro/create",
-            //     name: "biro.create",
-            //     component: () => import('@/view/Biro/createPage.vue'),
-            // },
-            // {
-            //     path: "/biro/edit/:id",
-            //     name: "biro.edit",
-            //     component: () => import('@/view/Biro/editPage.vue'),
+            //     path: "/register",
+            //     name: "register.index",
+            //     component: () => import('@/view/Register/indexPage.vue'),
             // },
             
         ],

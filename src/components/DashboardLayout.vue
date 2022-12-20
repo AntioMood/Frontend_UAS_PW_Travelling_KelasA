@@ -24,10 +24,14 @@
                             <router-link :to="{name:'tiket.index'}" class="nav-link">Pemesanan Tiket Perjalanan</router-link>
                         </li>
                         <!-- <li class="nav-item">
-                            <router-link :to="{name:'golongan.index'}" class="nav-link">Golongan</router-link>
+                            <router-link :to="{name:'register.index'}" class="nav-link">Register</router-link>
                         </li> -->
+                        <li class="nav-item">
+                            <router-link :to="{name:'profile.index'}" class="nav-link">Profile</router-link>
+                        </li>
                     </ul>
                 </div>
+                
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"> 
