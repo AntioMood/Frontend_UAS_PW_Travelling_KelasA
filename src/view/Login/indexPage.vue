@@ -1,95 +1,118 @@
 <template>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div>
-                <div>
-                    <h3>Login</h3>
-                    <hr />
-                </div>
-                <!-- <div class="alert alert-danger" v-if="error">
-                    {{ error }}
-                </div> -->
-                <!-- <form @submit.prevent="onLogin()"> -->
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                        />
-                        
-                        <!-- <div class="error" v-if="errors.email">
-                            {{ errors.email }}
-                        </div> -->
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            class="form-control"
-                        />
-                        
-                        <!-- <div class="error" v-if="errors.password">
-                            {{ errors.password }}
-                        </div> -->
-                    </div>
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                    <div class="my-3">
-                        <button type="submit" class="btn btn-primary">
-                            Login
-                        </button>
+                        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+
+                        <form class="mx-1 mx-md-4" @submit.prevent="login">
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <label class="form-label" for="form3Example3c">Email</label>
+                                <input v-model="user.email" type="email" id="form3Example3c" class="form-control" />
+                            </div>
+                            <div v-if="validation.email" class="mt-2 alert alert-danger">
+                                {{ validation.email[0] }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <label class="form-label" for="form3Example4c">Password</label>
+                                <input v-model="user.password" type="password" id="form3Example4c" class="form-control" />
+                            </div>
+                            <div v-if="validation.password" class="mt-2 alert alert-danger">
+                                {{ validation.password[0] }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4 mx-3">
+                            <p>
+                            Don't have an account? <a href="#!" class="text-white-50 fw-bold"><router-link :to="{ name: 'Register' }">Sign Up </router-link></a>
+                            </p>
+                        </div>
+
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button type="button" class="btn btn-primary btn-lg">Login</button>
+                        </div>
+
+                        </form>
+
                     </div>
-                <!-- </form> -->
+                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                        class="img-fluid" alt="Sample image">
+
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
             </div>
         </div>
-    </div>
+  </section>
 </template>
-<!-- <script>
-import { mapActions, mapMutations } from 'vuex';
-import SignupValidations from '../services/SignupValidations';
-import {
-    LOADING_SPINNER_SHOW_MUTATION,
-    LOGIN_ACTION,
-} from '../store/storeconstants';
+
+<script>
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
 export default {
-    data() {
-        return {
-            email: '',
-            password: '',
-            errors: [],
-            error: '',
-        };
-    },
-    methods: {
-        ...mapActions('auth', {
-            login: LOGIN_ACTION,
-        }),
-        ...mapMutations({
-            showLoading: LOADING_SPINNER_SHOW_MUTATION,
-        }),
-        async onLogin() {
-            let validations = new SignupValidations(
-                this.email,
-                this.password,
-            );
-            this.errors = validations.checkValidations();
-            if (this.errors.length) {
-                return false;
+  setup() {
+    const user = reactive({
+      email: '',
+      password: '',
+    });
+
+    const token = ref('');
+
+    const message = ref('');
+
+    const router = useRouter();
+
+    const validation = ref([]);
+
+
+    function login() {
+        let email = user.email
+        let password = user.password
+      axios.post(`https://127.0.0.1:8000/api/login`, {
+            email: email,
+            password: password
+        }).then((response) => {
+          localStorage.setItem('token', response.data.access_token)
+
+          console.log(localStorage.getItem('token'))
+
+          router.push({
+            name: 'beranda',
+            params:{
+                type: "success",
+                text: "Berhasil Login"
             }
-            this.error = '';
-            this.showLoading(true);
-            //Login check
-            try {
-                await this.login({
-                    email: this.email,
-                    password: this.password,
-                });
-            } catch (e) {
-                this.error = e;
-                this.showLoading(false);
-            }
-            this.showLoading(false);
-            this.$router.push('/posts');
-        },
-    },
+          })
+        }).catch(error => {
+            message.value = error.response.data.message
+            console.log(error.response.data.message)
+        })
+    }
+
+    return {
+      user, 
+      validation, 
+      message,
+      token,
+      login, 
+    };
+  },
 };
-</script> -->
+</script>

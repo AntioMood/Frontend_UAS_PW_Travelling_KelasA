@@ -5,6 +5,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     {
+        path: "/",
+        name: "Login",
+        component: () => import("@/view/Login/indexPage.vue"),
+    },
+    {
+        path: "/",
+        name: "Register",
+        component: () => import("@/view/Register/indexPage.vue"),
+    },
+    {
         path: '/',
         name: 'beranda',
         component: () => import('@/components/DashboardLayout.vue'),

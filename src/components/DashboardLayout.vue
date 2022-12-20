@@ -24,13 +24,7 @@
                             <router-link :to="{name:'tiket.index'}" class="nav-link">Pemesanan Tiket Perjalanan</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link :to="{name:'register.index'}" class="nav-link">Register</router-link>
-                        </li>
-                        <li class="nav-item">
                             <router-link :to="{name:'profile.index'}" class="nav-link">Profile</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{name:'login.index'}" class="nav-link">Login</router-link>
                         </li>
                     </ul>
                 </div>
