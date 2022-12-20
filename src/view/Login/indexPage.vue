@@ -3,64 +3,52 @@
         <div class="col-md-6 offset-md-3">
             <div>
                 <div>
-                    <h3>Register</h3>
+                    <h3>Login</h3>
                     <hr />
                 </div>
                 <!-- <div class="alert alert-danger" v-if="error">
-                    {{ error }} -->
-                </div>
-                <!-- <form @submit.prevent="onSignup()"> -->
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            
-                        />
-                        <!-- <div class="error" v-if="errors.email">
-                            {{ errors.email }}
-                        </div> -->
-                    </div>
+                    {{ error }}
+                </div> -->
+                <!-- <form @submit.prevent="onLogin()"> -->
                     <div class="form-group">
                         <label>Email</label>
                         <input
-                            type="password"
+                            type="text"
                             class="form-control"
-                           
                         />
-                        <!-- <div class="error" v-if="errors.password">
-                            {{ errors.password }}
+                        
+                        <!-- <div class="error" v-if="errors.email">
+                            {{ errors.email }}
                         </div> -->
-                    
                     </div>
                     <div class="form-group">
                         <label>Password</label>
                         <input
-                            type="text"
+                            type="password"
                             class="form-control"
-                            
                         />
-                        <!-- <div class="error" v-if="errors.email">
-                            {{ errors.email }}
+                        
+                        <!-- <div class="error" v-if="errors.password">
+                            {{ errors.password }}
                         </div> -->
                     </div>
 
                     <div class="my-3">
                         <button type="submit" class="btn btn-primary">
-                            Signup
+                            Login
                         </button>
                     </div>
                 <!-- </form> -->
             </div>
         </div>
-    <!-- </div> -->
+    </div>
 </template>
 <!-- <script>
-import SignupValidations from '../services/SignupValidations';
 import { mapActions, mapMutations } from 'vuex';
+import SignupValidations from '../services/SignupValidations';
 import {
     LOADING_SPINNER_SHOW_MUTATION,
-    SIGNUP_ACTION,
+    LOGIN_ACTION,
 } from '../store/storeconstants';
 export default {
     data() {
@@ -71,46 +59,36 @@ export default {
             error: '',
         };
     },
-    beforeRouteLeave() {
-        console.log('rote leaving');
-        console.log(this.$store);
-    },
-    beforeRouteEnter(_, _1, next) {
-        next((vm) => {
-            console.log('route entering');
-            console.log(vm.$store.state.auth);
-        });
-    },
     methods: {
         ...mapActions('auth', {
-            signup: SIGNUP_ACTION,
+            login: LOGIN_ACTION,
         }),
         ...mapMutations({
             showLoading: LOADING_SPINNER_SHOW_MUTATION,
         }),
-        async onSignup() {
+        async onLogin() {
             let validations = new SignupValidations(
                 this.email,
                 this.password,
             );
             this.errors = validations.checkValidations();
-            if ('email' in this.errors || 'password' in this.errors) {
+            if (this.errors.length) {
                 return false;
             }
-            //make spinner true
+            this.error = '';
             this.showLoading(true);
-            //signup registration
+            //Login check
             try {
-                await this.signup({
+                await this.login({
                     email: this.email,
                     password: this.password,
                 });
-            } catch (error) {
-                this.error = error;
+            } catch (e) {
+                this.error = e;
                 this.showLoading(false);
             }
             this.showLoading(false);
-            //make spinner false
+            this.$router.push('/posts');
         },
     },
 };

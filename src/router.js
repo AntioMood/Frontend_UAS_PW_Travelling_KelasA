@@ -34,11 +34,16 @@ const routes = [
                 name: "profile.index",
                 component: () => import('@/view/Profile/indexPage.vue'),
             },
-            // {
-            //     path: "/register",
-            //     name: "register.index",
-            //     component: () => import('@/view/Register/indexPage.vue'),
-            // },
+            {
+                path: "/register",
+                name: "register.index",
+                component: () => import('@/view/Register/indexPage.vue'),
+            },
+            {
+                path: "/login",
+                name: "login.index",
+                component: () => import('@/view/Login/indexPage.vue'),
+            },
             
         ],
     },
