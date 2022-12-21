@@ -21,15 +21,15 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(tempatWisata, id) in tempatWisatas" :key="id">
-                                    <td>{{ trip.namaTempat }}</td>
-                                    <td>{{ trip.alamat }}</td>
-                                    <td>{{ trip.rating }}</td>
-                                    <td>{{ trip.review }}</td>
+                                    <td>{{ tempatWisata.namaTempat }}</td>
+                                    <td>{{ tempatWisata.alamat }}</td>
+                                    <td>{{ tempatWisata.rating }}</td>
+                                    <td>{{ tempatWisata.review }}</td>
                                     <td class="text-center">
-                                        <router-link :to="{ name: 'destinasi.edit', params: { id: trip.id } }" class="btn btn-sm btn-primary mr-1">
+                                        <router-link :to="{ name: 'destinasi.edit', params: { id: tempatWisata.id } }" class="btn btn-sm btn-primary mr-1">
                                             EDIT
                                         </router-link>
-                                        <button @click.prevent="tempatWisataDelete(trip.id)" class="btn btn-sm btn-danger ml-1">
+                                        <button @click.prevent="tempatWisataDelete(tempatWisata.id)" class="btn btn-sm btn-danger ml-1">
                                             DELETE
                                         </button>
                                     </td>

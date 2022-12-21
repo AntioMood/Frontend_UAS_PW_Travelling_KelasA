@@ -24,12 +24,12 @@
                             <router-link :to="{name:'tiket.index'}" class="nav-link">Pemesanan Tiket Perjalanan</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link :to="{name:'profile.index'}" class="nav-link">Profile</router-link>
-                        </li>
-                        <li class="nav-item">
                             <router-link :to="{name:'destinasi.index'}" class="nav-link">Destinasi</router-link>
                         </li>
-                        <li class="nav-item pb-4" style="margin-top: 530px; margin-left: -15px;">
+                        <li class="nav-item">
+                            <router-link :to="{name:'profile.index'}" class="nav-link">Profile</router-link>
+                        </li>
+                        <li class="nav-item pb-4" style="margin-top: 500px; margin-left: -15px;">
                             <form class="mx-1 mx-md-4" @submit.prevent="logout">
                                 <button class="btn btn-danger" type="submit">Logout</button>
                             </form>

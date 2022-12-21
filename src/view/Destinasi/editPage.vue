@@ -7,7 +7,7 @@
                         <h4>EDIT DESTINASI</h4>
                         <hr>
 
-                        <form @submit.prevent="store">
+                        <form @submit.prevent="update">
                             <div class="form-group mb-3">
                                 <label class="form-label">Nama Tempat Destinasi</label>
                                 <input type="text" class="form-control" v-model="tempatWisata.namaTempat">

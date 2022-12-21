@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <form class="card mb-4">
+  <form class="card mb-4" @submit.prevent="update">
     <div class="card-header">
       <h4 class="card-heading">Edit Profile</h4>
     </div>
@@ -18,13 +18,13 @@
         <div class="col-md-5">
           <div class="mb-4">
             <label class="form-label">Username</label>
-            <input class="form-control" type="text" placeholder="Company" value="Papa Ganteng">
+            <input class="form-control" v-model="users.name" placeholder="Masukkan name"/>
           </div>
         </div>
         <div class="col-sm-6 col-md-3">
           <div class="mb-4">
             <label class="form-label">Password</label>
-            <input class="form-control" type="text" placeholder="Username" value="SIGANTENG">
+            <input type="password" class="form-control" v-model="users.password" placeholder="Masukkan password"/>
           </div>
         </div>
         </div>
@@ -37,17 +37,22 @@
 
 <script>
   import axios from "axios";
-  import { useRoute  } from 'vue-router'
-  import { onMounted, reactive } from "vue";
+  import { useRoute , useRouter } from 'vue-router'
+  import { onMounted, reactive, ref } from "vue";
   export default {
     setup() {
       //reactive state
       const users = reactive({
         name: '',
         email: '',
+        password:''
       })
       //vue route
       const route = useRoute()
+
+      const router = useRouter();
+      
+      const validation = ref([]);
 
       onMounted(() => {
         //get API from Laravel Backend
@@ -63,9 +68,34 @@
           });
       });
 
+      function update() {
+      let name = users.name;
+      let password = users.password;
+      axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
+      axios.put(`http://localhost:8000/api/users/${localStorage.getItem("user")}`,
+          {
+            name: name,
+            password: password,
+          }
+        )
+        .then((response) => {
+          localStorage.setItem("name", response.data.data.name);
+          localStorage.setItem("password", response.data.data.password);
+          //redirect ke post index
+          router.push({
+            name: "profile.index",
+          });
+        }).catch((error) => {
+          //assign state validation with error
+          validation.value = error.response.data;
+        });
+    }
+
       return{
             users,
-            route
+            route,
+            router,
+            update 
       }
     }
   }
