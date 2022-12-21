@@ -26,6 +26,11 @@
                         <li class="nav-item">
                             <router-link :to="{name:'profile.index'}" class="nav-link">Profile</router-link>
                         </li>
+                        <li class="nav-item pb-4" style="margin-top: 530px; margin-left: -15px;">
+                            <form class="mx-1 mx-md-4" @submit.prevent="logout">
+                                <button class="btn btn-danger" type="submit">Logout</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
                 
@@ -41,8 +46,39 @@
 </template>        
 
 <script>
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 export default{
+    setup() {
+    const user = reactive({
+      email: "",
+      password: "",
+    });
 
+    const token = ref("");
+
+    const message = ref("");
+
+    const router = useRouter();
+
+    const validation = ref([]);
+
+
+    function logout() {
+        localStorage.removeItem("token")
+        router.push({
+            name: "login"
+        })
+    }
+
+    return {
+      user, 
+      validation, 
+      message,
+      token,
+      logout, 
+    };
+  },
 }
 
 </script>

@@ -46,11 +46,11 @@
                             </div>
 
                             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                <button type="button" class="btn btn-primary btn-lg">Register</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Register</button>
                             </div>
 
                             <p class="mb-0 mx-3">
-                                Already have an account? <a href="#!" class="text-white fw-bold"><router-link :to="{ name: 'Login' }">Login</router-link></a>
+                                Already have an account? <a href="#!" class="text-white fw-bold"><router-link :to="{ name: 'login' }">Login</router-link></a>
                             </p>
 
                         </form>
@@ -75,41 +75,41 @@
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
-
 export default {
   setup() {
-    const router = useRouter();
 
-    //state user
     const user = reactive({
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
     });
 
     const validation = ref([]);
 
+    const router = useRouter();
+
     function register() {
-        let name = user.name
-        let email = user.email
-        let password = user.password
-      axios.post("https://localhost:8000/api/register", {
-            name: name,
-            email: email,
-            password: password
+      let name = user.name;
+      let email = user.email;
+      let password = user.password;
+      axios.post("http://127.0.0.1:8000/api/register", {
+          name: name,
+          email: email,
+          password: password,
         })
         .then(() => {
           router.push({
-              name: 'Login',
-            })
-        }).catch((error) => {
+            name: "login",
+          });
+        })
+        .catch((error) => {
           validation.value = error.response.data;
         });
     }
 
     return {
-      user, 
-      validation, 
+      user,
+      validation,
       router,
       register,
     };

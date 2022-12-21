@@ -67,6 +67,7 @@
 
             onMounted(() => {
             //get API from Laravel Backend
+                axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
                 axios.get(`http://localhost:8000/api/trips/${route.params.id}`)
                 .then(response => {
                     //assign state posts with response data
@@ -84,7 +85,8 @@
                 let namaBiro = trip.namaBiro
                 let tipePerjalanan = trip.tipePerjalanan
                 let jenisTransportasi = trip.jenisTransportasi
-
+                
+                axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
                 axios.put(`http://localhost:8000/api/trips/${route.params.id}`, {
                     namaBiro: namaBiro,
                     tipePerjalanan: tipePerjalanan,

@@ -8,6 +8,10 @@
                     <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
+                      <div v-if="loginFailed" class="alert alert-danger">
+                        Email atau Password Anda salah.
+                      </div>
+
                         <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
 
                         <form class="mx-1 mx-md-4" @submit.prevent="login">
@@ -36,12 +40,12 @@
 
                         <div class="d-flex flex-row align-items-center mb-4 mx-3">
                             <p>
-                            Don't have an account? <a href="#!" class="text-white-50 fw-bold"><router-link :to="{ name: 'Register' }">Sign Up </router-link></a>
+                            Don't have an account? <a href="#!" class="text-white-50 fw-bold"><router-link :to="{ name: 'register' }">Sign Up </router-link></a>
                             </p>
                         </div>
 
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                            <button type="button" class="btn btn-primary btn-lg">Login</button>
+                            <button type="submit" class="btn btn-primary btn-lg">Login</button>
                         </div>
 
                         </form>
@@ -69,47 +73,54 @@ import axios from "axios";
 export default {
   setup() {
     const user = reactive({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
 
-    const token = ref('');
+    const token = ref("");
 
-    const message = ref('');
+    const message = ref("");
 
     const router = useRouter();
+
+    const loginFailed = ref(null)
 
     const validation = ref([]);
 
 
     function login() {
-        let email = user.email
-        let password = user.password
-      axios.post(`https://127.0.0.1:8000/api/login`, {
-            email: email,
-            password: password
-        }).then((response) => {
+      axios.post(`http://127.0.0.1:8000/api/login`, {
+        email: user.email,
+        password: user.password
+      })
+      .then((response) => {
+        if(response.data.success){
           localStorage.setItem('token', response.data.access_token)
+          localStorage.setItem('user', response.data.user.id);
 
-          console.log(localStorage.getItem('token'))
+            console.log(localStorage.getItem('token'))
 
-          router.push({
-            name: 'beranda',
-            params:{
-                type: "success",
-                text: "Berhasil Login"
-            }
-          })
+            router.push({
+              name: 'beranda',
+              params:{
+                  type: "success",
+                  text: "Berhasil Login"
+              }
+            })
+        }
+        loginFailed.value = true
+
         }).catch(error => {
             message.value = error.response.data.message
             console.log(error.response.data.message)
-        })
+        });
     }
 
     return {
       user, 
       validation, 
       message,
+      loginFailed,
       token,
       login, 
     };

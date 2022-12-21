@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
-                        <!-- <router-link :to="{name: 'pegawai.create'}" class="btn btn-md btn-success">TAMBAH PEGAWAI</router-link> -->
+                        <router-link :to="{name: 'tiket.create'}" class="btn btn-md btn-success">TAMBAH Tiket</router-link>
                         <table class="table table-striped table-bordered mt-4">
 
                             <thead class="thead-dark">
@@ -62,6 +62,7 @@ export default {
         //mounted
         onMounted(() => {
             //get API from Laravel Backend
+            axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
             axios.get('http://localhost:8000/api/tikets')
             .then(response => {
                 //assign state posts with response data
@@ -73,7 +74,8 @@ export default {
         })
 
         function tiketDelete(id){
-          axios.delete(`http://localhost:8000/api/tikets/${id}`)
+            axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
+            axios.delete(`http://localhost:8000/api/tikets/${id}`)
             .then(() => {     
             //splice departemen 
             tikets.value.splice(tikets.value.indexOf(id),1)

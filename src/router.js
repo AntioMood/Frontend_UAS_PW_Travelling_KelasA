@@ -5,17 +5,17 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     {
-        path: "/",
-        name: "Login",
-        component: () => import("@/view/Login/indexPage.vue"),
-    },
-    {
-        path: "/",
-        name: "Register",
-        component: () => import("@/view/Register/indexPage.vue"),
-    },
-    {
         path: '/',
+        name: 'login',
+        component: () => import('@/components/loginPage.vue'),
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('@/components/registrasiPage.vue'),
+    },
+    {
+        path: '/beranda',  
         name: 'beranda',
         component: () => import('@/components/DashboardLayout.vue'),
         children:[
@@ -40,21 +40,15 @@ const routes = [
                 component: () => import('@/view/Tiket/indexPage.vue'),
             },
             {
+                path: "/tiket",
+                name: "tiket.create",
+                component: () => import('@/view/Tiket/createPage.vue'),
+            },
+            {
                 path: "/profile",
                 name: "profile.index",
                 component: () => import('@/view/Profile/indexPage.vue'),
-            },
-            {
-                path: "/register",
-                name: "register.index",
-                component: () => import('@/view/Register/indexPage.vue'),
-            },
-            {
-                path: "/login",
-                name: "login.index",
-                component: () => import('@/view/Login/indexPage.vue'),
-            },
-            
+            },         
         ],
     },
 ]

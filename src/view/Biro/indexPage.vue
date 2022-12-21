@@ -54,6 +54,7 @@ export default {
         //mounted
         onMounted(() => {
             //get API from Laravel Backend
+            axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
             axios.get('http://localhost:8000/api/trips')
             .then(response => {
                 //assign state posts with response data
@@ -64,7 +65,8 @@ export default {
         })
 
         function tripDelete(id){
-          axios.delete(`http://localhost:8000/api/trips/${id}`)
+            axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
+            axios.delete(`http://localhost:8000/api/trips/${id}`)
             .then(() => {     
             //splice departemen 
             trips.value.splice(trips.value.indexOf(id),1)

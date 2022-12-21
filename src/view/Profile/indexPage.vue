@@ -2,7 +2,7 @@
   <div class="col-lg-4">
     <div class="card card-profile mb-4">
       <div class="card-header" style="background-image: url(https://therichpost.com/wp-content/uploads/2021/05/bootstrap5-carousel-slider-img1.jpg);"> </div>
-      <div class="card-body text-center"><img class="card-profile-img" src="https://therichpost.com/wp-content/uploads/2021/03/avatar2.png" alt="Jassa Rich">
+      <div class="card-body text-center"><img class="card-profile-img" src="https://upload.wikimedia.org/wikipedia/commons/5/50/User_icon-cp.svg" alt="Jassa Rich">
         <h3 class="mb-3">{{ users.name }}</h3>
         <p class="mb-4">{{ users.email }}</p>
       </div>
@@ -51,7 +51,8 @@
 
       onMounted(() => {
         //get API from Laravel Backend
-        axios.get(`http://localhost:8000/api/users/${route.params.id}`)
+        axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
+        axios.get(`http://localhost:8000/api/users/${localStorage.getItem("user")}`)
           .then((response) => {
             //assign state posts with response data
             users.name = response.data.data.name,

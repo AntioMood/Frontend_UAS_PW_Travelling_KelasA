@@ -67,7 +67,7 @@
                 let namaBiro = trip.namaBiro
                 let tipePerjalanan = trip.tipePerjalanan
                 let jenisTransportasi = trip.jenisTransportasi
-
+                axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
                 axios.post('http://localhost:8000/api/trips', {
                     namaBiro: namaBiro,
                     tipePerjalanan: tipePerjalanan,
