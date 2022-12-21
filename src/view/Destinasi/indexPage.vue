@@ -56,7 +56,7 @@ export default {
         onMounted(() => {
             //get API from Laravel Backend
             axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
-            axios.get('http://localhost:8000/api/tempatWisatas')
+            axios.get('http://localhost:8000/api/tempat_wisatas')
             .then(response => {
                 //assign state posts with response data
                 tempatWisatas.value = response.data.data
@@ -67,7 +67,7 @@ export default {
 
         function tempatWisataDelete(id){
             axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
-            axios.delete(`http://localhost:8000/api/tempatWisatas/${id}`)
+            axios.delete(`http://localhost:8000/api/tempat_wisatas/${id}`)
             .then(() => {     
             //splice departemen 
             tempatWisatas.value.splice(tempatWisatas.value.indexOf(id),1)

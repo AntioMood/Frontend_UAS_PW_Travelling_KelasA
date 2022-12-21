@@ -79,7 +79,7 @@
                 let rating = tempatWisata.rating
                 let review = tempatWisata.review
                 axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
-                axios.post('http://localhost:8000/api/tempatWisatas', {
+                axios.post('http://localhost:8000/api/tempat_wisatas', {
                     namaTempat: namaTempat,
                     alamat: alamat,
                     rating: rating,

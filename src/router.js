@@ -53,6 +53,16 @@ const routes = [
                 path: "/destinasi",
                 name: "destinasi.index",
                 component: () => import('@/view/Destinasi/indexPage.vue'),
+            },
+            {
+                path: "/destinasi",
+                name: "destinasi.create",
+                component: () => import('@/view/Destinasi/createPage.vue'),
+            },
+            {
+                path: "/destinasi",
+                name: "destinasi.edit",
+                component: () => import('@/view/Destinasi/editPage.vue'),
             },         
         ],
     },

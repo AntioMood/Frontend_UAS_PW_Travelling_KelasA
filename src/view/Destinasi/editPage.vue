@@ -78,7 +78,7 @@
             onMounted(() => {
             //get API from Laravel Backend
                 axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
-                axios.get(`http://localhost:8000/api/tempatWisatas/${route.params.id}`)
+                axios.get(`http://localhost:8000/api/tempat_wisatas/${route.params.id}`)
                 .then(response => {
                     //assign state posts with response data
                     tempatWisata.namaTempat = response.data.data.namaTempat  
@@ -99,7 +99,7 @@
                 let review = tempatWisata.review
                 
                 axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem("token")}`
-                axios.put(`http://localhost:8000/api/tempatWisatas/${route.params.id}`, {
+                axios.put(`http://localhost:8000/api/tempat_wisatas/${route.params.id}`, {
                     namaTempat: namaTempat,
                     alamat: alamat,
                     rating: rating,
